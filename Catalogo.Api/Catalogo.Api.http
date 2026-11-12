@@ -1,0 +1,109 @@
+### Pruebas HTTP - Microservicio Catalogo.Api (Puerto 5001)
+
+### 1. Categorias
+GET http://localhost:5001/api/Categorias
+
+###
+GET http://localhost:5001/api/Categorias/1
+
+###
+POST http://localhost:5001/api/Categorias
+Content-Type: application/json
+
+{
+  "nombre": "Redes y Conectividad",
+  "descripcion": "Routers Wi-Fi 6, switches gestionables y adaptadores de red"
+}
+
+###
+PUT http://localhost:5001/api/Categorias/4
+Content-Type: application/json
+
+{
+  "idCategoria": 4,
+  "nombre": "Redes Empresariales",
+  "descripcion": "Equipos de conectividad y puntos de acceso inalámbricos"
+}
+
+###
+DELETE http://localhost:5001/api/Categorias/4
+
+### 2. Marcas
+GET http://localhost:5001/api/Marcas
+
+###
+GET http://localhost:5001/api/Marcas/1
+
+###
+POST http://localhost:5001/api/Marcas
+Content-Type: application/json
+
+{
+  "nombre": "Kingston",
+  "paisOrigen": "Estados Unidos"
+}
+
+###
+PUT http://localhost:5001/api/Marcas/4
+Content-Type: application/json
+
+{
+  "idMarca": 4,
+  "nombre": "Kingston Technology",
+  "paisOrigen": "Estados Unidos"
+}
+
+###
+DELETE http://localhost:5001/api/Marcas/4
+
+### 3. Productos
+GET http://localhost:5001/api/Productos
+
+###
+GET http://localhost:5001/api/Productos/1
+
+###
+GET http://localhost:5001/api/Productos/999
+
+###
+POST http://localhost:5001/api/Productos
+Content-Type: application/json
+
+{
+  "idCategoria": 1,
+  "idMarca": 2,
+  "nombre": "Memoria RAM Corsair Vengeance 32GB DDR5",
+  "sku": "CORS-DDR5-32G",
+  "precio": 115.00,
+  "estado": true
+}
+
+### Prueba FK Física inválida (400 Bad Request)
+POST http://localhost:5001/api/Productos
+Content-Type: application/json
+
+{
+  "idCategoria": 888,
+  "idMarca": 1,
+  "nombre": "Producto sin categoría válida",
+  "sku": "ERR-CAT-888",
+  "precio": 50.00,
+  "estado": true
+}
+
+###
+PUT http://localhost:5001/api/Productos/4
+Content-Type: application/json
+
+{
+  "idProducto": 4,
+  "idCategoria": 1,
+  "idMarca": 2,
+  "nombre": "Memoria RAM Corsair Vengeance RGB 32GB DDR5",
+  "sku": "CORS-DDR5-32G",
+  "precio": 122.00,
+  "estado": true
+}
+
+###
+DELETE http://localhost:5001/api/Productos/4

@@ -1,0 +1,139 @@
+### Pruebas HTTP - Microservicio Inventario.Api (Puerto 5002)
+
+### 1. Bodegas
+GET http://localhost:5002/api/Bodegas
+
+###
+GET http://localhost:5002/api/Bodegas/1
+
+###
+POST http://localhost:5002/api/Bodegas
+Content-Type: application/json
+
+{
+  "nombre": "Bodega Logística Ambato",
+  "ciudad": "Ambato",
+  "direccion": "Av. Indoamérica Km 3"
+}
+
+###
+PUT http://localhost:5002/api/Bodegas/4
+Content-Type: application/json
+
+{
+  "idBodega": 4,
+  "nombre": "Bodega Central Ambato",
+  "ciudad": "Ambato",
+  "direccion": "Parque Industrial Ambato Etapa 2"
+}
+
+###
+DELETE http://localhost:5002/api/Bodegas/4
+
+### 2. Existencias
+GET http://localhost:5002/api/Existencias
+
+###
+GET http://localhost:5002/api/Existencias/1
+
+###
+GET http://localhost:5002/api/Existencias/producto/1
+
+###
+POST http://localhost:5002/api/Existencias
+Content-Type: application/json
+
+{
+  "idProducto": 2,
+  "idBodega": 2,
+  "stock": 18
+}
+
+###
+PUT http://localhost:5002/api/Existencias/5
+Content-Type: application/json
+
+{
+  "idExistencia": 5,
+  "idProducto": 2,
+  "idBodega": 2,
+  "stock": 24
+}
+
+###
+DELETE http://localhost:5002/api/Existencias/5
+
+### 3. MovimientosInventario
+GET http://localhost:5002/api/MovimientosInventario
+
+###
+GET http://localhost:5002/api/MovimientosInventario/1
+
+###
+POST http://localhost:5002/api/MovimientosInventario
+Content-Type: application/json
+
+{
+  "idProducto": 1,
+  "idBodega": 1,
+  "tipo": "ENTRADA",
+  "cantidad": 8
+}
+
+### Prueba FK Lógica inválida (400 Bad Request)
+POST http://localhost:5002/api/MovimientosInventario
+Content-Type: application/json
+
+{
+  "idProducto": 7777,
+  "idBodega": 1,
+  "tipo": "ENTRADA",
+  "cantidad": 4
+}
+
+###
+PUT http://localhost:5002/api/MovimientosInventario/1
+Content-Type: application/json
+
+{
+  "idMovimiento": 1,
+  "idProducto": 1,
+  "idBodega": 1,
+  "tipo": "ENTRADA",
+  "cantidad": 25
+}
+
+###
+DELETE http://localhost:5002/api/MovimientosInventario/4
+
+### 4. ReservasStock
+GET http://localhost:5002/api/ReservasStock
+
+###
+GET http://localhost:5002/api/ReservasStock/1
+
+###
+POST http://localhost:5002/api/ReservasStock
+Content-Type: application/json
+
+{
+  "idProducto": 2,
+  "idBodega": 1,
+  "cantidad": 2,
+  "estado": "PENDIENTE"
+}
+
+###
+PUT http://localhost:5002/api/ReservasStock/2
+Content-Type: application/json
+
+{
+  "idReserva": 2,
+  "idProducto": 2,
+  "idBodega": 1,
+  "cantidad": 2,
+  "estado": "CONFIRMADA"
+}
+
+###
+DELETE http://localhost:5002/api/ReservasStock/2

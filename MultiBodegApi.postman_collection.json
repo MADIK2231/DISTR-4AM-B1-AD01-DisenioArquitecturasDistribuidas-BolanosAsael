@@ -1,0 +1,622 @@
+{
+  "info": {
+    "name": "AD01 - Sistema Distribuido Multibodega (Catalogo, Inventario, Pedidos)",
+    "description": "Colección de pruebas REST para los 3 microservicios independientes: Catalogo.Api (5001), Inventario.Api (5002) y Pedidos.Api (5003). Incluye operaciones CRUD y verificación de llaves foráneas físicas y lógicas (códigos HTTP 200, 201, 400 y 404).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Servicio 1 - Catalogo.Api (5001)",
+      "item": [
+        {
+          "name": "Categorias",
+          "item": [
+            {
+              "name": "Consultar Categorias (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Categorias"
+              }
+            },
+            {
+              "name": "Obtener Categoria por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Categorias/1"
+              }
+            },
+            {
+              "name": "Registrar Categoria (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Redes y Conectividad\",\n  \"descripcion\": \"Routers Wi-Fi 6, switches gestionables y adaptadores de red\"\n}"
+                },
+                "url": "http://localhost:5001/api/Categorias"
+              }
+            },
+            {
+              "name": "Modificar Categoria (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idCategoria\": 4,\n  \"nombre\": \"Redes Empresariales\",\n  \"descripcion\": \"Equipos de conectividad y puntos de acceso inalámbricos\"\n}"
+                },
+                "url": "http://localhost:5001/api/Categorias/4"
+              }
+            },
+            {
+              "name": "Eliminar Categoria (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5001/api/Categorias/4"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Marcas",
+          "item": [
+            {
+              "name": "Consultar Marcas (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Marcas"
+              }
+            },
+            {
+              "name": "Obtener Marca por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Marcas/1"
+              }
+            },
+            {
+              "name": "Registrar Marca (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Kingston\",\n  \"paisOrigen\": \"Estados Unidos\"\n}"
+                },
+                "url": "http://localhost:5001/api/Marcas"
+              }
+            },
+            {
+              "name": "Modificar Marca (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idMarca\": 4,\n  \"nombre\": \"Kingston Technology\",\n  \"paisOrigen\": \"Estados Unidos\"\n}"
+                },
+                "url": "http://localhost:5001/api/Marcas/4"
+              }
+            },
+            {
+              "name": "Eliminar Marca (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5001/api/Marcas/4"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Productos",
+          "item": [
+            {
+              "name": "Consultar Productos (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Productos"
+              }
+            },
+            {
+              "name": "Obtener Producto por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Productos/1"
+              }
+            },
+            {
+              "name": "Producto No Registrado (404)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5001/api/Productos/999"
+              }
+            },
+            {
+              "name": "Registrar Producto Válido (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idCategoria\": 1,\n  \"idMarca\": 2,\n  \"nombre\": \"Memoria RAM Corsair Vengeance 32GB DDR5\",\n  \"sku\": \"CORS-DDR5-32G\",\n  \"precio\": 115.00,\n  \"estado\": true\n}"
+                },
+                "url": "http://localhost:5001/api/Productos"
+              }
+            },
+            {
+              "name": "Error FK Física - Categoría Inexistente (400)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idCategoria\": 888,\n  \"idMarca\": 1,\n  \"nombre\": \"Producto con categoría inválida\",\n  \"sku\": \"ERR-CAT-888\",\n  \"precio\": 50.00,\n  \"estado\": true\n}"
+                },
+                "url": "http://localhost:5001/api/Productos"
+              }
+            },
+            {
+              "name": "Modificar Producto (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idProducto\": 4,\n  \"idCategoria\": 1,\n  \"idMarca\": 2,\n  \"nombre\": \"Memoria RAM Corsair Vengeance RGB 32GB DDR5\",\n  \"sku\": \"CORS-DDR5-32G\",\n  \"precio\": 122.00,\n  \"estado\": true\n}"
+                },
+                "url": "http://localhost:5001/api/Productos/4"
+              }
+            },
+            {
+              "name": "Eliminar Producto (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5001/api/Productos/4"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Servicio 2 - Inventario.Api (5002)",
+      "item": [
+        {
+          "name": "Bodegas",
+          "item": [
+            {
+              "name": "Consultar Bodegas (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/Bodegas"
+              }
+            },
+            {
+              "name": "Obtener Bodega por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/Bodegas/1"
+              }
+            },
+            {
+              "name": "Registrar Bodega (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"Bodega Logística Ambato\",\n  \"ciudad\": \"Ambato\",\n  \"direccion\": \"Av. Indoamérica Km 3\"\n}"
+                },
+                "url": "http://localhost:5002/api/Bodegas"
+              }
+            },
+            {
+              "name": "Modificar Bodega (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idBodega\": 4,\n  \"nombre\": \"Bodega Central Ambato\",\n  \"ciudad\": \"Ambato\",\n  \"direccion\": \"Parque Industrial Ambato Etapa 2\"\n}"
+                },
+                "url": "http://localhost:5002/api/Bodegas/4"
+              }
+            },
+            {
+              "name": "Eliminar Bodega (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5002/api/Bodegas/4"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Existencias",
+          "item": [
+            {
+              "name": "Consultar Existencias (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/Existencias"
+              }
+            },
+            {
+              "name": "Obtener Existencia por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/Existencias/1"
+              }
+            },
+            {
+              "name": "Consultar Existencias por Producto (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/Existencias/producto/1"
+              }
+            },
+            {
+              "name": "Registrar Existencia (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idProducto\": 2,\n  \"idBodega\": 2,\n  \"stock\": 18\n}"
+                },
+                "url": "http://localhost:5002/api/Existencias"
+              }
+            },
+            {
+              "name": "Modificar Existencia (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idExistencia\": 5,\n  \"idProducto\": 2,\n  \"idBodega\": 2,\n  \"stock\": 24\n}"
+                },
+                "url": "http://localhost:5002/api/Existencias/5"
+              }
+            },
+            {
+              "name": "Eliminar Existencia (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5002/api/Existencias/5"
+              }
+            }
+          ]
+        },
+        {
+          "name": "MovimientosInventario",
+          "item": [
+            {
+              "name": "Consultar Movimientos (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/MovimientosInventario"
+              }
+            },
+            {
+              "name": "Obtener Movimiento por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/MovimientosInventario/1"
+              }
+            },
+            {
+              "name": "Registrar Entrada de Inventario (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idProducto\": 1,\n  \"idBodega\": 1,\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 8\n}"
+                },
+                "url": "http://localhost:5002/api/MovimientosInventario"
+              }
+            },
+            {
+              "name": "Error FK Lógica - Producto No Existe en Catalogo.Api (400)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idProducto\": 7777,\n  \"idBodega\": 1,\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 4\n}"
+                },
+                "url": "http://localhost:5002/api/MovimientosInventario"
+              }
+            },
+            {
+              "name": "Modificar Movimiento (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idMovimiento\": 1,\n  \"idProducto\": 1,\n  \"idBodega\": 1,\n  \"tipo\": \"ENTRADA\",\n  \"cantidad\": 25\n}"
+                },
+                "url": "http://localhost:5002/api/MovimientosInventario/1"
+              }
+            },
+            {
+              "name": "Eliminar Movimiento (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5002/api/MovimientosInventario/4"
+              }
+            }
+          ]
+        },
+        {
+          "name": "ReservasStock",
+          "item": [
+            {
+              "name": "Consultar Reservas (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/ReservasStock"
+              }
+            },
+            {
+              "name": "Obtener Reserva por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5002/api/ReservasStock/1"
+              }
+            },
+            {
+              "name": "Registrar Reserva de Stock (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idProducto\": 2,\n  \"idBodega\": 1,\n  \"cantidad\": 2,\n  \"estado\": \"PENDIENTE\"\n}"
+                },
+                "url": "http://localhost:5002/api/ReservasStock"
+              }
+            },
+            {
+              "name": "Modificar Reserva de Stock (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idReserva\": 2,\n  \"idProducto\": 2,\n  \"idBodega\": 1,\n  \"cantidad\": 2,\n  \"estado\": \"CONFIRMADA\"\n}"
+                },
+                "url": "http://localhost:5002/api/ReservasStock/2"
+              }
+            },
+            {
+              "name": "Eliminar Reserva de Stock (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5002/api/ReservasStock/2"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Servicio 3 - Pedidos.Api (5003)",
+      "item": [
+        {
+          "name": "Clientes",
+          "item": [
+            {
+              "name": "Consultar Clientes (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/Clientes"
+              }
+            },
+            {
+              "name": "Obtener Cliente por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/Clientes/1"
+              }
+            },
+            {
+              "name": "Registrar Cliente (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombres\": \"Sofía Montalvo\",\n  \"cedula\": \"1719283746\",\n  \"correo\": \"sofia.montalvo@dominio.ec\"\n}"
+                },
+                "url": "http://localhost:5003/api/Clientes"
+              }
+            },
+            {
+              "name": "Modificar Cliente (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idCliente\": 3,\n  \"nombres\": \"Sofía Alejandra Montalvo\",\n  \"cedula\": \"1719283746\",\n  \"correo\": \"sofia.alejandra@dominio.ec\"\n}"
+                },
+                "url": "http://localhost:5003/api/Clientes/3"
+              }
+            },
+            {
+              "name": "Eliminar Cliente (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5003/api/Clientes/3"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Pedidos",
+          "item": [
+            {
+              "name": "Consultar Pedidos (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/Pedidos"
+              }
+            },
+            {
+              "name": "Obtener Pedido por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/Pedidos/1"
+              }
+            },
+            {
+              "name": "Pedido Inexistente (404)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/Pedidos/999"
+              }
+            },
+            {
+              "name": "Registrar Pedido Orquestado con Reserva de Stock (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idCliente\": 1,\n  \"estado\": \"PAGADO\",\n  \"detalles\": [\n    {\n      \"idProducto\": 2,\n      \"cantidad\": 2,\n      \"precioUnitario\": 129.50\n    }\n  ]\n}"
+                },
+                "url": "http://localhost:5003/api/Pedidos"
+              }
+            },
+            {
+              "name": "Error Validación - Stock Insuficiente en Bodegas (400)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idCliente\": 1,\n  \"estado\": \"PENDIENTE\",\n  \"detalles\": [\n    {\n      \"idProducto\": 1,\n      \"cantidad\": 9999,\n      \"precioUnitario\": 189.99\n    }\n  ]\n}"
+                },
+                "url": "http://localhost:5003/api/Pedidos"
+              }
+            },
+            {
+              "name": "Modificar Estado de Pedido (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idPedido\": 1,\n  \"idCliente\": 1,\n  \"estado\": \"PROCESADO\"\n}"
+                },
+                "url": "http://localhost:5003/api/Pedidos/1"
+              }
+            },
+            {
+              "name": "Eliminar Pedido (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5003/api/Pedidos/2"
+              }
+            }
+          ]
+        },
+        {
+          "name": "DetallesPedido",
+          "item": [
+            {
+              "name": "Consultar DetallesPedido (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/DetallesPedido"
+              }
+            },
+            {
+              "name": "Obtener DetallePedido por ID (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/DetallesPedido/1"
+              }
+            },
+            {
+              "name": "Consultar Detalles por IdPedido (200)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:5003/api/DetallesPedido/pedido/1"
+              }
+            },
+            {
+              "name": "Registrar DetallePedido (201)",
+              "request": {
+                "method": "POST",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idPedido\": 1,\n  \"idProducto\": 2,\n  \"cantidad\": 1,\n  \"precioUnitario\": 129.50\n}"
+                },
+                "url": "http://localhost:5003/api/DetallesPedido"
+              }
+            },
+            {
+              "name": "Modificar DetallePedido (200)",
+              "request": {
+                "method": "PUT",
+                "header": [{ "key": "Content-Type", "value": "application/json" }],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"idDetalle\": 1,\n  \"idPedido\": 1,\n  \"idProducto\": 1,\n  \"cantidad\": 2,\n  \"precioUnitario\": 189.99\n}"
+                },
+                "url": "http://localhost:5003/api/DetallesPedido/1"
+              }
+            },
+            {
+              "name": "Eliminar DetallePedido (200)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": "http://localhost:5003/api/DetallesPedido/2"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

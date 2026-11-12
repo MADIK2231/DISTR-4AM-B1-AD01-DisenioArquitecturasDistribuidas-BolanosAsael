@@ -1,0 +1,120 @@
+### Pruebas HTTP - Microservicio Pedidos.Api (Puerto 5003)
+
+### 1. Clientes
+GET http://localhost:5003/api/Clientes
+
+###
+GET http://localhost:5003/api/Clientes/1
+
+###
+POST http://localhost:5003/api/Clientes
+Content-Type: application/json
+
+{
+  "nombres": "Sofía Montalvo",
+  "cedula": "1719283746",
+  "correo": "sofia.montalvo@dominio.ec"
+}
+
+###
+PUT http://localhost:5003/api/Clientes/3
+Content-Type: application/json
+
+{
+  "idCliente": 3,
+  "nombres": "Sofía Alejandra Montalvo",
+  "cedula": "1719283746",
+  "correo": "sofia.alejandra@dominio.ec"
+}
+
+###
+DELETE http://localhost:5003/api/Clientes/3
+
+### 2. Pedidos (Orquestación con Catalogo.Api e Inventario.Api)
+GET http://localhost:5003/api/Pedidos
+
+###
+GET http://localhost:5003/api/Pedidos/1
+
+###
+GET http://localhost:5003/api/Pedidos/999
+
+###
+POST http://localhost:5003/api/Pedidos
+Content-Type: application/json
+
+{
+  "idCliente": 1,
+  "estado": "PAGADO",
+  "detalles": [
+    {
+      "idProducto": 2,
+      "cantidad": 2,
+      "precioUnitario": 129.50
+    }
+  ]
+}
+
+### Prueba de Stock Insuficiente (400 Bad Request)
+POST http://localhost:5003/api/Pedidos
+Content-Type: application/json
+
+{
+  "idCliente": 1,
+  "estado": "PENDIENTE",
+  "detalles": [
+    {
+      "idProducto": 1,
+      "cantidad": 9999,
+      "precioUnitario": 189.99
+    }
+  ]
+}
+
+###
+PUT http://localhost:5003/api/Pedidos/1
+Content-Type: application/json
+
+{
+  "idPedido": 1,
+  "idCliente": 1,
+  "estado": "PROCESADO"
+}
+
+###
+DELETE http://localhost:5003/api/Pedidos/2
+
+### 3. DetallesPedido
+GET http://localhost:5003/api/DetallesPedido
+
+###
+GET http://localhost:5003/api/DetallesPedido/1
+
+###
+GET http://localhost:5003/api/DetallesPedido/pedido/1
+
+###
+POST http://localhost:5003/api/DetallesPedido
+Content-Type: application/json
+
+{
+  "idPedido": 1,
+  "idProducto": 2,
+  "cantidad": 1,
+  "precioUnitario": 129.50
+}
+
+###
+PUT http://localhost:5003/api/DetallesPedido/1
+Content-Type: application/json
+
+{
+  "idDetalle": 1,
+  "idPedido": 1,
+  "idProducto": 1,
+  "cantidad": 2,
+  "precioUnitario": 189.99
+}
+
+###
+DELETE http://localhost:5003/api/DetallesPedido/2
